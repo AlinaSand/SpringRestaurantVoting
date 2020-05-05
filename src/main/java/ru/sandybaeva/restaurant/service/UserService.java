@@ -34,12 +34,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(prepareToSave(user, passwordEncoder));
     }
 
-    public User getByEmail(String email) {
-        Assert.notNull(email, "email must not be null");
-        return checkNotFound(userRepository.getByEmail(email), "email=" + email);
-    }
-
-    public Optional<User> getById(int id) {
+    public User getById(int id) {
         return userRepository.findById(id);
     }
 

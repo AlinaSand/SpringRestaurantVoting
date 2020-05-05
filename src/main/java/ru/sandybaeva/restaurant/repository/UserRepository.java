@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Override
     @Transactional
     User save(User user);
+
+    User findById(int userId);
 }

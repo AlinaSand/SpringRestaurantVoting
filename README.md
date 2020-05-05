@@ -28,6 +28,8 @@ It should contain the code and README.md with API documentation and curl command
 `curl -s http://localhost:8080/rest/user/votes/history --user user1@mail.com:password1`
 #### get vote history between dates
 `curl -s 'http://localhost:8080/rest/user/votes/history?startDate=2020-01-01&endDate=2020-04-30' --user user1@mail.com:password1`
+#### register Users
+`curl -s -i -X POST -d '{"name":"New User","email":"test@mail.ru","password":"test-password"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/register`
 
 ### Admin 
 #### get all restaurants

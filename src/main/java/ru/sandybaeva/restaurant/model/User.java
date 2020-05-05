@@ -1,11 +1,13 @@
 package ru.sandybaeva.restaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
@@ -35,6 +37,8 @@ public class User extends AbstractNamedEntity {
     private Set<Role> roles;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
 
     public User() {}
@@ -49,6 +53,10 @@ public class User extends AbstractNamedEntity {
         this.password = password;
         this.registered = registered;
         setRoles(roles);
+    }
+
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getRegistered(), u.getRoles());
     }
 
     public String getEmail() {

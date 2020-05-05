@@ -1,6 +1,7 @@
 package ru.sandybaeva.restaurant.model;
 
 import org.hibernate.Hibernate;
+import org.springframework.util.Assert;
 import ru.sandybaeva.restaurant.HasId;
 
 import javax.persistence.*;
@@ -31,6 +32,11 @@ public abstract class AbstractBaseEntity implements HasId {
 
     @Override
     public Integer getId() {
+        return id;
+    }
+
+    public int id() {
+        Assert.notNull(id, "Entity must has id");
         return id;
     }
 

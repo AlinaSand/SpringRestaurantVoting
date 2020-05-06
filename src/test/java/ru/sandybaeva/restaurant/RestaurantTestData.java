@@ -29,4 +29,14 @@ public class RestaurantTestData {
         RESTAURANT_2.setDishes(Arrays.asList(DISH_4, DISH_5, DISH_6));
         RESTAURANT_3.setDishes(Arrays.asList(DISH_7, DISH_8, DISH_9));
     }
+
+    public static Restaurant getCreated() {
+        return new Restaurant("New restaurant");
+    }
+
+    public static Restaurant getUpdated() {
+        Restaurant updated = new Restaurant(RESTAURANT_ID_1, "Restaurant updated");
+        updated.setDishes(Arrays.asList(DISH_1, DISH_2, DISH_3));
+        return updated;
+    }
 }

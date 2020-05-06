@@ -16,10 +16,10 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
-    @Query("SELECT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date =:date ORDER BY r.name ASC")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date =:date ORDER BY r.name ASC")
     List<Restaurant> getAllCurrent(@Param("date") LocalDate date);
 
-    @Query("SELECT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date =:date AND r.id =:id")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date =:date AND r.id =:id")
     Restaurant getByIdCurrent(@Param("date") LocalDate date, @Param("id") int id);
 
     @Override

@@ -3,6 +3,7 @@ package ru.sandybaeva.restaurant.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class Dish extends AbstractNamedEntity {
 
     @NotNull
     @Column(name = "price")
+    @Range(min = 1, max = 10000)
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)

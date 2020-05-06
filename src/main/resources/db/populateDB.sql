@@ -13,6 +13,7 @@ VALUES ('Admin', 'admin@mail.com', '{noop}admin'),
 
 INSERT INTO user_roles (user_id, role)
 VALUES (100000, 'ROLE_ADMIN'),
+       (100000, 'ROLE_USER'),
        (100001, 'ROLE_USER'),
        (100002, 'ROLE_USER');
 

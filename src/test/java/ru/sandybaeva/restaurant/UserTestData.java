@@ -17,11 +17,13 @@ public class UserTestData {
         return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 
-    public static final int USER_ID = START_SEQ;
-    public static final int ADMIN_ID = START_SEQ + 1;
+    public static final int ADMIN_ID = START_SEQ;
+    public static final int USER_ID_1 = START_SEQ + 1;
+    public static final int USER_ID_2 = START_SEQ + 2;
 
-    public static final User USER = new User(USER_ID, "User", "user1@yandex.ru", "password1", Role.ROLE_USER);
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
+    public static final User USER_1 = new User(USER_ID_1, "User1", "user1@mail.com", "password1", Role.ROLE_USER);
+    public static final User USER_2 = new User(USER_ID_2, "User2", "user2@mail.com", "password2", Role.ROLE_USER);
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@mail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
 
     public static User getNew() {
         return new User(null, "New", "new@gmail.com", "newPass", new Date(), Collections.singleton(Role.ROLE_USER));

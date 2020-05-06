@@ -15,7 +15,6 @@ import ru.sandybaeva.restaurant.web.json.JsonUtil;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.sandybaeva.restaurant.TestUtil.readFromJson;
-import static ru.sandybaeva.restaurant.TestUtil.userHttpBasic;
 import static ru.sandybaeva.restaurant.UserTestData.*;
 
 class UserControllerTest extends AbstractControllerTest {

@@ -27,12 +27,12 @@ INSERT INTO dishes (name, date, price, restaurant_id)
 VALUES ('Borsh', '2020-04-15', 250, 100003),
        ('Rice', '2020-04-15', 300, 100003),
        ('Coffee', '2020-04-15', 100, 100003),
-       ('Noodles', '2020-04-15', 250, 100004),
-       ('Bliny', '2020-04-15', 200, 100004),
-       ('Vine', '2020-04-15', 200, 100004),
-       ('Harcho', '2020-04-15', 180, 100005),
-       ('Belyash', '2020-04-15', 100, 100005),
-       ('Bear', '2020-04-15', 200, 100005);
+       ('Soup day', '2020-04-15', 200, 100004),
+       ('Grecha', '2020-04-15', 200, 100004),
+       ('Coffee', '2020-04-15', 200, 100004),
+       ('Harcho', CURRENT_DATE, 180, 100005),
+       ('Belyash', CURRENT_DATE, 100, 100005),
+       ('Bear', CURRENT_DATE, 200, 100005);
 
 INSERT INTO votes (date, user_id, restaurant_id)
 VALUES ('2020-04-15', 100001, 100003),

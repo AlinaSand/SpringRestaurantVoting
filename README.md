@@ -18,8 +18,8 @@ It should contain the code and README.md with API documentation and curl command
 ### User
 #### get all restaurants with menu today
 `curl -s http://localhost:8080/rest/user/restaurants --user user1@mail.com:password1`
-#### get restaurant id=100003 with menu today
-`curl -s http://localhost:8080/rest/user/restaurants/100003 --user user1@mail.com:password1`
+#### get restaurant id=100005 with menu today
+`curl -s http://localhost:8080/rest/user/restaurants/100005 --user user1@mail.com:password1`
 #### create vote
 `curl -s -X POST -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100003 --user user1@mail.com:password1`
 #### update vote

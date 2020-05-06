@@ -25,6 +25,10 @@ public class Restaurant extends AbstractNamedEntity {
         return dishes;
     }
 
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
     @Override
     public String toString() {
         return "Restaurant{" +

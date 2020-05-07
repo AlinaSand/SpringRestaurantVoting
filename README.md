@@ -38,8 +38,8 @@ It should contain the code and README.md with API documentation and curl command
 `curl -s http://localhost:8080/rest/admin/restaurants/100003 --user admin@mail.com:admin`
 #### create restaurant
 `curl -s -X POST -d '{"name":"Restaurant"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants --user admin@mail.com:admin`
-#### update restaurant with id=100018
-`curl -s -X PUT -d '{"id":100018, "name":"Rest"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100018 --user admin@mail.com:admin`
+#### update restaurant with id=100019
+`curl -s -X PUT -d '{"id":100019, "name":"Rest"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100019 --user admin@mail.com:admin`
 #### delete restaurant with id=100003
 `curl -s -X DELETE http://localhost:8080/rest/admin/restaurants/100003 --user admin@mail.com:admin`
 #### get all dishes by restaurant id=100004
@@ -47,21 +47,21 @@ It should contain the code and README.md with API documentation and curl command
 #### get dish by id=100010
 `curl -s http://localhost:8080/rest/admin/dishes/100010 --user admin@mail.com:admin`
 #### create dish
-`curl -s -X POST -d '{"name":"Kefir", "date":"2020-05-05", "price":250}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100003/dishes --user admin@mail.com:admin`
-#### update dish with id=100007
-`curl -s -X PUT -d '{"id":100007, "name":"Kefir", "date":"2020-05-05", "price":250}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100003/dishes/100007 --user admin@mail.com:admin`
-#### delete dish with id=100007
-`curl -s -X DELETE http://localhost:8080/rest/admin/dishes/100007 --user admin@mail.com:admin`
+`curl -s -X POST -d '{"name":"Kefir", "date":"2020-05-05", "price":250}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100004/dishes --user admin@mail.com:admin`
+#### update dish with id=100010
+`curl -s -X PUT -d '{"id":100010, "name":"Tvorog", "date":"2020-05-05", "price":250}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100004/dishes/100010 --user admin@mail.com:admin`
+#### delete dish with id=100010
+`curl -s -X DELETE http://localhost:8080/rest/admin/dishes/100010 --user admin@mail.com:admin`
 #### get votes by user
 `curl -s http://localhost:8080/rest/admin/votes/user/100001 --user admin@mail.com:admin`
-#### get votes by restaurant
+#### get votes by restaurant with id=100004
 `curl -s http://localhost:8080/rest/admin/votes/restaurant/100004 --user admin@mail.com:admin`
 #### get votes today
 `curl -s http://localhost:8080/rest/admin/votes/today --user admin@mail.com:admin`
 #### get votes between dates
-`curl -s 'http://localhost:8080/rest/admin/votes/between?startDate=2020-05-01&endDate=2020-05-05' --user admin@mail.com:admin`
+`curl -s 'http://localhost:8080/rest/admin/votes/between?startDate=2020-04-01&endDate=2020-05-05' --user admin@mail.com:admin`
 #### get votes between dates by user id=100001
-`curl -s 'http://localhost:8080/rest/admin/votes/user/100001/between?startDate=2020-05-01&endDate=2020-05-05' --user admin@mail.com:admin`
+`curl -s 'http://localhost:8080/rest/admin/votes/user/100001/between?startDate=2020-04-01&endDate=2020-05-05' --user admin@mail.com:admin`
 
 
 

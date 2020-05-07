@@ -14,7 +14,7 @@ public class Restaurant extends AbstractNamedEntity {
     }
 
     public Restaurant (String name) {
-        this.setName(name);
+        this(null, name);
     }
 
     public Restaurant(Integer id, String name) {

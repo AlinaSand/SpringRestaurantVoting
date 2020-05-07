@@ -39,7 +39,7 @@ public class AdminVoteController {
     @GetMapping(value = "/today")
     public List<Vote> getToday() {
         log.info("get votes today}");
-        return voteService.getBetween(LocalDate.now(), LocalDate.now());
+        return voteService.getBetween(LocalDate.now(), LocalDate.now().plusDays(1));
     }
 
     @GetMapping(value = "/between")

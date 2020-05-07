@@ -22,7 +22,7 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
     private static final String REST_URL = UserRestaurantController.REST_URL;
 
     @Autowired
-    RestaurantService restaurantService;
+    private RestaurantService restaurantService;
 
     @Test
     void getAllCurrent() throws Exception {

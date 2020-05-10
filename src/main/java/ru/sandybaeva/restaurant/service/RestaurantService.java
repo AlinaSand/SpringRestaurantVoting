@@ -55,12 +55,15 @@ public class RestaurantService {
         if (restaurantRepository.findById(restaurant.getId()).isEmpty()) {
             throw new NotFoundException("No restaurant found");
         }
+        if (!restaurantRepository.findByName(restaurant.getName()).isEmpty()) {
+            throw new DuplicateDataException("Restaurant with this name already exists");
+        }
         return checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.getId());
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int id) {
-        checkNotFoundWithId(restaurantRepository.delete(id), id);
+        restaurantRepository.deleteById(id);
     }
 
     public List<Restaurant> getAll() {

@@ -19,7 +19,6 @@ import java.util.List;
 import static ru.sandybaeva.restaurant.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-@Transactional
 public class VoteService {
 
     private final VoteRepository voteRepository;
@@ -32,6 +31,7 @@ public class VoteService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Vote create(int restaurantId, int userId) {
         Restaurant restaurant = restaurantRepository.getByIdCurrent(LocalDate.now(), restaurantId);
         checkNotFoundWithId(restaurant, restaurantId, Restaurant.class);
@@ -41,15 +41,16 @@ public class VoteService {
         } else throw new DuplicateDataException("You have been already voted!");
     }
 
+    @Transactional
     public void update(int userId, LocalDate date, int restaurantId) {
         Restaurant restaurant = restaurantRepository.getByIdCurrent(date, restaurantId);
         checkNotFoundWithId(restaurant, restaurantId, Restaurant.class);
-        if (!LocalTime.now().isBefore(LocalTime.of(11,00))) {
-            throw new DeadlineVoteException("It is after 11:00 then it is too late, vote can't be changed");
-        }
         List<Vote> votesToday = getBetweenWithUser(userId, date, date.plusDays(1));
         if(votesToday.isEmpty()) {
             throw new IllegalRequestDataException("You have no votes today");
+        }
+        if (!LocalTime.now().isBefore(LocalTime.of(11,00))) {
+            throw new DeadlineVoteException("It is after 11:00 then it is too late, vote can't be changed");
         }
         Vote vote = votesToday.get(0);
         vote.setRestaurant(restaurantId);
@@ -62,6 +63,7 @@ public class VoteService {
         return voteRepository.getAllBetweenDate(startDate, endDate);
     }
 
+    @Transactional
     public List<Vote> getBetweenWithUser(int userId, LocalDate startDate, LocalDate endDate) {
         User user = userRepository.findById(userId);
         checkNotFoundWithId(user, userId, User.class);
@@ -70,12 +72,14 @@ public class VoteService {
         return voteRepository.getAllBetweenDateWithUserId(userId, startDate, endDate);
     }
 
+    @Transactional
     public List<Vote> getByUser(int userId) {
         User user = userRepository.findById(userId);
         checkNotFoundWithId(user, userId, User.class);
         return voteRepository.findByUserIdOrderByDateDesc(userId);
     }
 
+    @Transactional
     public List<Vote> getByRestaurant(int restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
         checkNotFoundWithId(restaurant, restaurantId, Restaurant.class);

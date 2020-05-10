@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.sandybaeva.restaurant.model.Dish;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
@@ -18,13 +19,15 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Transactional
     Dish save(Dish dish);
 
+    @Override
     @Transactional
-    @Modifying
-    @Query("DELETE FROM Dish d WHERE d.id=:id AND d.restaurant.id=:restaurantId")
-    int delete(@Param("id") int id, @Param("restaurantId") int restaurantId);
+    void deleteById(Integer id);
 
-    Dish findById(int id);
+    Optional<Dish> findById(int id);
+
+    @Query("SELECT d FROM Dish d WHERE d.name=:name AND d.restaurant.id=:restaurantId")
+    Optional<Dish> getByNameAndRestaurantId(@Param("name") String name, @Param("restaurantId") int restaurantId);
 
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId")
-    List<Dish> getAll(@Param("restaurantId") int restaurantId);
+    Optional<List<Dish>> getAll(@Param("restaurantId") int restaurantId);
 }

@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.sandybaeva.restaurant.model.Restaurant;
 import ru.sandybaeva.restaurant.repository.RestaurantRepository;
+import ru.sandybaeva.restaurant.util.exception.DuplicateDataException;
+import ru.sandybaeva.restaurant.util.exception.IllegalRequestDataException;
+import ru.sandybaeva.restaurant.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +42,9 @@ public class RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
+        if (!restaurantRepository.findByName(restaurant.getName()).isEmpty()) {
+            throw new DuplicateDataException("Restaurant already exists");
+        }
         return restaurantRepository.save(restaurant);
     }
 
@@ -46,10 +52,12 @@ public class RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
+        if (restaurantRepository.findById(restaurant.getId()).isEmpty()) {
+            throw new NotFoundException("No restaurant found");
+        }
         return checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.getId());
     }
 
-    @Transactional
     @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int id) {
         checkNotFoundWithId(restaurantRepository.delete(id), id);

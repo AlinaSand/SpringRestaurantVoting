@@ -33,8 +33,7 @@ public class UserVoteController {
     public ResponseEntity<Vote> create(@PathVariable("restaurantId") int restaurantId) {
         int userId = SecurityUtil.authUserId();
         log.info("create vote for user with id={}", userId);
-        Vote created = new Vote(userId, restaurantId, LocalDate.now());
-        voteService.create(created);
+        Vote created = voteService.create(restaurantId, userId);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

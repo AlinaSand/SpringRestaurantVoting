@@ -8,6 +8,9 @@ import ru.sandybaeva.restaurant.model.Dish;
 import ru.sandybaeva.restaurant.model.Restaurant;
 import ru.sandybaeva.restaurant.repository.DishRepository;
 import ru.sandybaeva.restaurant.repository.RestaurantRepository;
+import ru.sandybaeva.restaurant.util.exception.DuplicateDataException;
+import ru.sandybaeva.restaurant.util.exception.IllegalRequestDataException;
+import ru.sandybaeva.restaurant.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,21 +29,25 @@ public class DishService {
     }
 
     public Dish get(int id) {
-        return checkNotFoundWithId(dishRepository.findById(id), id);
+        return checkNotFoundWithId(dishRepository.findById(id).orElse(null), id);
     }
 
     public List<Dish> getAll(int restaurantId) {
-        return checkNotFoundWithId(dishRepository.getAll(restaurantId), restaurantId);
+        return checkNotFoundWithId(dishRepository.getAll(restaurantId).orElse(null), restaurantId);
     }
 
+    @Transactional
     @CacheEvict(value = "restaurants", allEntries = true)
     public Dish create(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
         checkNotFoundWithId(restaurant, restaurantId, Restaurant.class);
         dish.setRestaurant(restaurant);
-        if(dish.getDate() == null) {
+        if (dish.getDate() == null) {
             dish.setDate(LocalDate.now());
+        }
+        if (!dishRepository.getByNameAndRestaurantId(dish.getName(), dish.getRestaurant().getId()).isEmpty()) {
+            throw new DuplicateDataException("Dish already exists");
         }
         return dishRepository.save(dish);
     }
@@ -49,7 +56,15 @@ public class DishService {
     @CacheEvict(value = "restaurants", allEntries = true)
     public Dish update(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
+        checkNotFoundWithId(restaurant, restaurantId, Restaurant.class);
         dish.setRestaurant(restaurantRepository.getOne(restaurantId));
+        if (!dishRepository.getByNameAndRestaurantId(dish.getName(), dish.getRestaurant().getId()).isEmpty()) {
+            throw new DuplicateDataException("Dish already exists");
+        }
+        if (dishRepository.findById(dish.getId()).isEmpty()) {
+            throw new NotFoundException("No dish found");
+        }
         checkNotFoundWithId(dishRepository.save(dish), dish.getId());
         return dish;
     }

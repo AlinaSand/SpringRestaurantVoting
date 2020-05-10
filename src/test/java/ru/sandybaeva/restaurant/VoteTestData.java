@@ -23,8 +23,4 @@ public class VoteTestData {
     public static Vote getCreated() {
         return new Vote(START_SEQ + 19, USER_ID_2, RESTAURANT_ID_3, LocalDate.now());
     }
-
-    public static Vote getUpdated() {
-        return new Vote(VOTE_ID_3, USER_ID_1, RESTAURANT_ID_3, LocalDate.now());
-    }
 }

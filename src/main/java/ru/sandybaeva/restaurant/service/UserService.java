@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import ru.sandybaeva.restaurant.AuthorizedUser;
 import ru.sandybaeva.restaurant.model.User;
 import ru.sandybaeva.restaurant.repository.UserRepository;
+import ru.sandybaeva.restaurant.util.exception.DuplicateDataException;
 
 import java.util.Optional;
 
@@ -27,6 +28,9 @@ public class UserService implements UserDetailsService {
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
+        if (!userRepository.getByEmail(user.getEmail()).isEmpty()) {
+            throw new DuplicateDataException("User with this email already exists");
+        }
         return prepareAndSave(user);
     }
 
@@ -40,7 +44,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.getByEmail(email.toLowerCase());
+        User user = userRepository.getByEmail(email.toLowerCase()).orElse(null);
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }

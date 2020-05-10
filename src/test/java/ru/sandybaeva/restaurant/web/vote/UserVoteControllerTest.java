@@ -7,6 +7,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.sandybaeva.restaurant.model.Vote;
 import ru.sandybaeva.restaurant.service.VoteService;
+import ru.sandybaeva.restaurant.util.exception.IllegalRequestDataException;
 import ru.sandybaeva.restaurant.web.AbstractControllerTest;
 import ru.sandybaeva.restaurant.web.json.JsonUtil;
 
@@ -18,7 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.sandybaeva.restaurant.UserTestData.*;
 import static ru.sandybaeva.restaurant.VoteTestData.*;
-import static ru.sandybaeva.restaurant.RestaurantTestData.RESTAURANT_ID_1;
+import static ru.sandybaeva.restaurant.RestaurantTestData.RESTAURANT_ID_3;
+import static ru.sandybaeva.restaurant.RestaurantTestData.RESTAURANT_ID_2;
 import static ru.sandybaeva.restaurant.TestUtil.readFromJson;
 import static ru.sandybaeva.restaurant.TestUtil.userHttpBasic;
 
@@ -32,13 +34,29 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @Test
     void create() throws Exception {
         Vote created = getCreated();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_1)
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_3)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created))
-                .with(userHttpBasic(USER_1)));
+                .with(userHttpBasic(USER_2)));
         Vote returned = readFromJson(action, Vote.class);
         created.setId(returned.getId());
-        VOTE_MATCHER.assertMatch(voteService.getByUser(USER_ID_1), Arrays.asList(VOTE_3, created, VOTE_1));
+        VOTE_MATCHER.assertMatch(voteService.getByUser(USER_ID_2), Arrays.asList(created, VOTE_2));
+    }
+
+    @Test
+    void createNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/66")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER_2)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void createByRestaurantWithoutMenuToday() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER_2)))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

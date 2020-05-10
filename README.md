@@ -21,9 +21,9 @@ It should contain the code and README.md with API documentation and curl command
 #### get restaurant id=100005 with menu today
 `curl -s http://localhost:8080/rest/user/restaurants/100005 --user user1@mail.com:password1`
 #### create vote
-`curl -s -X POST -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100003 --user user1@mail.com:password1`
+`curl -s -X POST -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100005 --user user2@mail.com:password2`
 #### update vote
-`curl -s -X PUT -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100004 --user user1@mail.com:password1`
+`curl -s -X PUT -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100005 --user user1@mail.com:password1`
 #### get vote history
 `curl -s http://localhost:8080/rest/user/votes/history --user user1@mail.com:password1`
 #### get vote history between dates
@@ -38,8 +38,8 @@ It should contain the code and README.md with API documentation and curl command
 `curl -s http://localhost:8080/rest/admin/restaurants/100003 --user admin@mail.com:admin`
 #### create restaurant
 `curl -s -X POST -d '{"name":"Restaurant"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants --user admin@mail.com:admin`
-#### update restaurant with id=100019
-`curl -s -X PUT -d '{"id":100019, "name":"Rest"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100019 --user admin@mail.com:admin`
+#### update restaurant with id=100003
+`curl -s -X PUT -d '{"id":100003, "name":"Rest"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100003 --user admin@mail.com:admin`
 #### delete restaurant with id=100003
 `curl -s -X DELETE http://localhost:8080/rest/admin/restaurants/100003 --user admin@mail.com:admin`
 #### get all dishes by restaurant id=100004

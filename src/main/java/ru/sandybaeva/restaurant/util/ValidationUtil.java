@@ -31,9 +31,9 @@ public class ValidationUtil {
         return object;
     }
 
-    public static void checkNotFound(boolean found, String arg) {
+    public static void checkNotFound(boolean found, String msg) {
         if (!found) {
-            throw new NotFoundException(arg);
+            throw new NotFoundException("Not found entity with " + msg);
         }
     }
 

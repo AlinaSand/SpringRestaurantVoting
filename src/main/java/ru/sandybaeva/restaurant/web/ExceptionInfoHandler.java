@@ -20,8 +20,6 @@ import ru.sandybaeva.restaurant.util.exception.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.Map;
-
 import static ru.sandybaeva.restaurant.util.exception.ErrorType.*;
 
 @RestControllerAdvice(annotations = RestController.class)
@@ -43,7 +41,7 @@ public class ExceptionInfoHandler {
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler({IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class,
-            HttpMessageNotReadableException.class, DuplicateDataException.class})
+            HttpMessageNotReadableException.class, DuplicateDataException.class, DeadlineVoteException.class})
     public ErrorInfo illegalRequestDataError(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
     }

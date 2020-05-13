@@ -14,7 +14,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    Optional<User> getByEmail(String email);
+    User getByEmail(String email);
 
     @Override
     @Transactional

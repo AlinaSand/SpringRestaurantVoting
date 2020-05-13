@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        if (!userRepository.getByEmail(user.getEmail()).isEmpty()) {
+        if (userRepository.getByEmail(user.getEmail()) != null) {
             throw new DuplicateDataException("User with this email already exists");
         }
         return prepareAndSave(user);
@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.getByEmail(email.toLowerCase()).orElse(null);
+        User user = userRepository.getByEmail(email.toLowerCase());
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }

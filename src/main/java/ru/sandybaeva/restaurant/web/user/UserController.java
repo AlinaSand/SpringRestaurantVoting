@@ -7,15 +7,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.sandybaeva.restaurant.model.Role;
 import ru.sandybaeva.restaurant.model.User;
 import ru.sandybaeva.restaurant.service.UserService;
 import ru.sandybaeva.restaurant.to.UserTo;
 import ru.sandybaeva.restaurant.util.UserUtil;
 
 import java.net.URI;
-
-import static ru.sandybaeva.restaurant.util.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)

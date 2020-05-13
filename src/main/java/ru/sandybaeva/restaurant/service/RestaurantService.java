@@ -30,6 +30,7 @@ public class RestaurantService {
         return restaurantRepository.getAllCurrent(date);
     }
 
+    @Cacheable(value = "restaurantWithDishToday")
     public Restaurant getByIdCurrent(LocalDate date, int id) {
         return checkNotFoundWithId(restaurantRepository.getByIdCurrent(date, id), id);
     }
@@ -49,19 +50,20 @@ public class RestaurantService {
     }
 
     @Transactional
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         if (restaurantRepository.findById(restaurant.getId()).isEmpty()) {
             throw new NotFoundException("No restaurant found");
         }
-        if (!restaurantRepository.findByName(restaurant.getName()).isEmpty()) {
+        Restaurant check = restaurantRepository.findByName(restaurant.getName()).orElse(null);
+        if (check != null && check.getId() !=restaurant.getId()) {
             throw new DuplicateDataException("Restaurant with this name already exists");
         }
         return checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.getId());
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public void delete(int id) {
         restaurantRepository.deleteById(id);
     }

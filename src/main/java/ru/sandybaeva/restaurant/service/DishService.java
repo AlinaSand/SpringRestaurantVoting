@@ -36,7 +36,7 @@ public class DishService {
     }
 
     @Transactional
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public Dish create(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
         Restaurant restaurant = restaurantService.getById(restaurantId);
@@ -50,7 +50,7 @@ public class DishService {
     }
 
     @Transactional
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public Dish update(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
         if (dishRepository.findById(dish.getId()).isEmpty()) {
@@ -67,7 +67,7 @@ public class DishService {
         return dish;
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public void delete(int id) {
         dishRepository.deleteById(id);
     }

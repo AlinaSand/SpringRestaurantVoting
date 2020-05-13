@@ -34,7 +34,7 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @Test
     void create() throws Exception {
         Vote created = getCreated();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_3)
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_3 + "/votes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created))
                 .with(userHttpBasic(USER_2)));
@@ -45,7 +45,7 @@ class UserVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void createNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/66")
+        perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/66/votes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER_2)))
                 .andExpect(status().isUnprocessableEntity());
@@ -53,7 +53,7 @@ class UserVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void createByRestaurantWithoutMenuToday() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_2)
+        perform(MockMvcRequestBuilders.post(REST_URL + "/restaurants/" + RESTAURANT_ID_2 + "/votes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER_2)))
                 .andExpect(status().isUnprocessableEntity());
@@ -61,7 +61,7 @@ class UserVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void getBetween() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/history")
+        perform(MockMvcRequestBuilders.get(REST_URL + "/votes/history")
                 .param("startDate", "2020-04-01")
                 .param("endDate", "2020-05-01")
                 .with(userHttpBasic(USER_1)))

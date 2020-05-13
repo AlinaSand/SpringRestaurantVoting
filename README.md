@@ -21,9 +21,9 @@ It should contain the code and README.md with API documentation and curl command
 #### get restaurant id=100005 with menu today
 `curl -s http://localhost:8080/rest/user/restaurants/100005 --user user1@mail.com:password1`
 #### create vote
-`curl -s -X POST -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100005 --user user2@mail.com:password2`
+`curl -s -X POST -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/restaurants/100005/votes --user user2@mail.com:password2`
 #### update vote
-`curl -s -X PUT -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/votes/restaurants/100005 --user user1@mail.com:password1`
+`curl -s -X PUT -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/restaurants/100005/votes --user user1@mail.com:password1`
 #### get vote history
 `curl -s http://localhost:8080/rest/user/votes/history --user user1@mail.com:password1`
 #### get vote history between dates
@@ -52,17 +52,12 @@ It should contain the code and README.md with API documentation and curl command
 `curl -s -X PUT -d '{"id":100010, "name":"Tvorog", "date":"2020-05-05", "price":250}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurants/100004/dishes/100010 --user admin@mail.com:admin`
 #### delete dish with id=100010
 `curl -s -X DELETE http://localhost:8080/rest/admin/dishes/100010 --user admin@mail.com:admin`
-#### get votes by user
-`curl -s http://localhost:8080/rest/admin/votes/user/100001 --user admin@mail.com:admin`
 #### get votes by restaurant with id=100004
-`curl -s http://localhost:8080/rest/admin/votes/restaurant/100004 --user admin@mail.com:admin`
+`curl -s http://localhost:8080/rest/admin/restaurant/100004/votes --user admin@mail.com:admin`
 #### get votes today
-`curl -s http://localhost:8080/rest/admin/votes/today --user admin@mail.com:admin`
+`curl -s http://localhost:8080/rest/admin/votes/history --user admin@mail.com:admin`
 #### get votes between dates
-`curl -s 'http://localhost:8080/rest/admin/votes/between?startDate=2020-04-01&endDate=2020-05-05' --user admin@mail.com:admin`
-#### get votes between dates by user id=100001
-`curl -s 'http://localhost:8080/rest/admin/votes/user/100001/between?startDate=2020-04-01&endDate=2020-05-05' --user admin@mail.com:admin`
-
+`curl -s 'http://localhost:8080/rest/admin/votes/history?startDate=2020-04-01&endDate=2020-05-05' --user admin@mail.com:admin`
 
 
 

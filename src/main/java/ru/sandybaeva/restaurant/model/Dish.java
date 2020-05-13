@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "restaurant_id"}, name = "dishes_unique_name_restaurant_idx"))
+@Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "date", "restaurant_id"}, name = "dishes_unique_name_date_restaurant_idx"))
 public class Dish extends AbstractNamedEntity {
 
     @NotNull

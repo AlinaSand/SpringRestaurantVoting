@@ -41,7 +41,7 @@ CREATE TABLE dishes
     date          TIMESTAMP DEFAULT now() NOT NULL,
     price         INTEGER                 NOT NULL,
     restaurant_id INTEGER                 NOT NULL,
-    CONSTRAINT dishes_unique_name_restaurant_idx UNIQUE (name, restaurant_id),
+    CONSTRAINT dishes_unique_name_date_restaurant_idx UNIQUE (name, date, restaurant_id),
     FOREIGN KEY (restaurant_id) REFERENCES RESTAURANTS (id) ON DELETE CASCADE
 );
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sandybaeva.restaurant.model.Dish;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,10 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
 
     Optional<Dish> findById(int id);
 
-    @Query("SELECT d FROM Dish d WHERE d.name=:name AND d.restaurant.id=:restaurantId")
-    Optional<Dish> getByNameAndRestaurantId(@Param("name") String name, @Param("restaurantId") int restaurantId);
+    @Query("SELECT d FROM Dish d WHERE d.name=:name AND d.restaurant.id=:restaurantId AND d.date=:date")
+    Optional<Dish> getByNameAndRestaurantIdAndDate(@Param("name") String name, @Param("restaurantId") int restaurantId,
+                                                   @Param("date") LocalDate date);
 
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId")
-    Optional<List<Dish>> getAll(@Param("restaurantId") int restaurantId);
+    List<Dish> getAll(@Param("restaurantId") int restaurantId);
 }

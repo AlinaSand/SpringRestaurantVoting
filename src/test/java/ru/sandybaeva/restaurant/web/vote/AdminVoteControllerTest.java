@@ -26,18 +26,8 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     private VoteService voteService;
 
     @Test
-    void getByUser() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/user/" + USER_ID_1)
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        VOTE_MATCHER.assertMatch(voteService.getByUser(USER_ID_1), Arrays.asList(VOTE_3, VOTE_1));
-    }
-
-    @Test
     void getByRestaurant() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/restaurant/" + RESTAURANT_ID_1)
+        perform(MockMvcRequestBuilders.get(REST_URL + "/restaurant/" + RESTAURANT_ID_1 + "/votes")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -47,17 +37,17 @@ class AdminVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void getToday() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/today")
+        perform(MockMvcRequestBuilders.get(REST_URL + "/votes/history")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        VOTE_MATCHER.assertMatch(voteService.getBetween(LocalDate.now(), LocalDate.now().plusDays(1)), Arrays.asList(VOTE_3));
+        VOTE_MATCHER.assertMatch(voteService.getBetween(LocalDate.now(), LocalDate.now()), Arrays.asList(VOTE_3));
     }
 
     @Test
     void getBetween() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/between")
+        perform(MockMvcRequestBuilders.get(REST_URL + "/votes/history")
                 .param("startDate", "2020-04-01")
                 .param("endDate", "2020-05-01")
                 .with(userHttpBasic(ADMIN)))
@@ -66,19 +56,6 @@ class AdminVoteControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
         VOTE_MATCHER.assertMatch(voteService.getBetween(LocalDate.of(2020, 4, 1),
                 LocalDate.of(2020, 5, 1)), Arrays.asList(VOTE_1, VOTE_2));
-    }
-
-    @Test
-    void getBetweenByUser() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/user/" + USER_ID_1 + "/between")
-                .param("startDate", "2020-04-01")
-                .param("endDate", "2020-05-01")
-                .with(userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        VOTE_MATCHER.assertMatch(voteService.getBetweenWithUser(USER_ID_1, LocalDate.of(2020, 4, 1),
-                LocalDate.of(2020, 5, 1)), Arrays.asList(VOTE_1));
     }
 
     @Test

@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping(value = UserVoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserVoteController {
 
-    static final String REST_URL = "/rest/user/votes";
+    static final String REST_URL = "/rest/user";
     private static final Logger log = LoggerFactory.getLogger(UserVoteController.class);
 
     private final VoteService voteService;
@@ -29,7 +29,7 @@ public class UserVoteController {
         this.voteService = voteService;
     }
 
-    @PostMapping(value = "/restaurants/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/restaurants/{restaurantId}/votes", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vote> create(@PathVariable("restaurantId") int restaurantId) {
         int userId = SecurityUtil.authUserId();
         log.info("create vote for user with id={}", userId);
@@ -42,7 +42,7 @@ public class UserVoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/restaurants/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/restaurants/{restaurantId}/votes", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@PathVariable("restaurantId") int restaurantId) {
         int userId = SecurityUtil.authUserId();
@@ -50,7 +50,7 @@ public class UserVoteController {
         voteService.update(userId, LocalDate.now(), restaurantId);
     }
 
-    @GetMapping(value = "/history")
+    @GetMapping(value = "/votes/history")
     public List<Vote> getBetween(
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {

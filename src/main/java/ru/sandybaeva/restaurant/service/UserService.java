@@ -10,10 +10,7 @@ import ru.sandybaeva.restaurant.model.User;
 import ru.sandybaeva.restaurant.repository.UserRepository;
 import ru.sandybaeva.restaurant.util.exception.DuplicateDataException;
 
-import java.util.Optional;
-
 import static ru.sandybaeva.restaurant.util.UserUtil.prepareToSave;
-import static ru.sandybaeva.restaurant.util.ValidationUtil.checkNotFound;
 
 @Service
 public class UserService implements UserDetailsService {

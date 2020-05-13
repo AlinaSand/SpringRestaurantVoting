@@ -53,9 +53,7 @@ public class DishService {
     @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public Dish update(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
-        if (dishRepository.findById(dish.getId()).isEmpty()) {
-            throw new NotFoundException("No dish found");
-        }
+        get(dish.getId());
         Restaurant restaurant = restaurantService.getById(restaurantId);
         dish.setRestaurant(restaurant);
         dish.setDate(LocalDate.now());

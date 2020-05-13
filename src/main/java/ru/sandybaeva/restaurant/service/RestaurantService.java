@@ -53,9 +53,7 @@ public class RestaurantService {
     @CacheEvict(value = {"restaurants", "restaurantWithDishToday"}, allEntries = true)
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
-        if (restaurantRepository.findById(restaurant.getId()).isEmpty()) {
-            throw new NotFoundException("No restaurant found");
-        }
+        getById(restaurant.getId());
         Restaurant check = restaurantRepository.findByName(restaurant.getName()).orElse(null);
         if (check != null && check.getId() !=restaurant.getId()) {
             throw new DuplicateDataException("Restaurant with this name already exists");

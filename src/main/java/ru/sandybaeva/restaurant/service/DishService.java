@@ -57,8 +57,8 @@ public class DishService {
         Restaurant restaurant = restaurantService.getById(restaurantId);
         dish.setRestaurant(restaurant);
         dish.setDate(LocalDate.now());
-        Dish check = dishRepository.getByNameAndRestaurantIdAndDate(dish.getName(), dish.getRestaurant().getId(), dish.getDate()).orElse(null);
-        if (check != null && check.getId() != dish.getId()) {
+        if (!dishRepository.getByNameAndRestaurantIdAndDate(dish.getName(), dish.getRestaurant().getId(), dish.getDate())
+                .isEmpty()) {
             throw new DuplicateDataException("Dish already exists");
         }
         checkNotFoundWithId(dishRepository.save(dish), dish.getId());

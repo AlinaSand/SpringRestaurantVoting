@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "date", "restaurant_id"}, name = "dishes_unique_name_date_restaurant_idx"))
 public class Dish extends AbstractNamedEntity {
 
-    @NotNull
     @Column(name = "date")
     private LocalDate date;
 
@@ -26,7 +25,6 @@ public class Dish extends AbstractNamedEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
-    @NotNull
     private Restaurant restaurant;
 
     public Dish() {

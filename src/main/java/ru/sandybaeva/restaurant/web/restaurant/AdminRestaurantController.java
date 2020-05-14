@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.sandybaeva.restaurant.model.Restaurant;
 import ru.sandybaeva.restaurant.service.RestaurantService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class AdminRestaurantController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> createRestaurant(@Valid @RequestBody Restaurant restaurant) {
         checkNew(restaurant);
         log.info("create restaurant");
         Restaurant created = restaurantService.create(restaurant);
@@ -56,7 +57,7 @@ public class AdminRestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Restaurant update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+    public Restaurant update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         assureIdConsistent(restaurant, id);
         log.info("update restaurant with id={}", id);
         return restaurantService.update(restaurant);

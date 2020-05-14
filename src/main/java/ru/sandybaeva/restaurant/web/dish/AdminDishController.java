@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.sandybaeva.restaurant.model.Dish;
 import ru.sandybaeva.restaurant.service.DishService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class AdminDishController {
     }
 
     @PostMapping(value = "/restaurants/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> save(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {
+    public ResponseEntity<Dish> save(@Valid @RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {
         checkNew(dish);
         log.info("create dish in restaurant id={}", restaurantId);
         Dish created = dishService.create(dish, restaurantId);
@@ -56,7 +57,7 @@ public class AdminDishController {
 
     @PutMapping(value = "/restaurants/{restaurantId}/dishes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Dish update(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {
+    public Dish update(@Valid @RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {
         assureIdConsistent(dish, id);
         log.info("update dish with id={}", id);
         return dishService.update(dish, restaurantId);

@@ -12,6 +12,7 @@ import ru.sandybaeva.restaurant.service.UserService;
 import ru.sandybaeva.restaurant.to.UserTo;
 import ru.sandybaeva.restaurant.util.UserUtil;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -30,7 +31,7 @@ public class UserController {
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<User> register(@RequestBody UserTo userTo) {
+    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
         log.info("create from to {}", userTo);
         User created = userService.create(UserUtil.createNewFromTo(userTo));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

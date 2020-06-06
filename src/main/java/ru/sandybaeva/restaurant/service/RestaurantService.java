@@ -8,8 +8,6 @@ import org.springframework.util.Assert;
 import ru.sandybaeva.restaurant.model.Restaurant;
 import ru.sandybaeva.restaurant.repository.RestaurantRepository;
 import ru.sandybaeva.restaurant.util.exception.DuplicateDataException;
-import ru.sandybaeva.restaurant.util.exception.IllegalRequestDataException;
-import ru.sandybaeva.restaurant.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
